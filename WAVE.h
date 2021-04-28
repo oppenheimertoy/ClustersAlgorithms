@@ -30,6 +30,4 @@ public:
 	void PrintToFile_W();
 	std::vector<Point> Get_WAVE();
 	void Delete(Point ppoint);
-
-
 };
