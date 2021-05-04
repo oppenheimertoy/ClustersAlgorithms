@@ -9,15 +9,13 @@
 #include "WAVE.h"
 class Poisk {
 private:
-	std::string parse;
 	std::vector<Point> arrpoint; //for all 
 	int p_num;
 	double p_eps;
 	int p_Minpts;
 public:
-	Poisk(std::string param_string, std::vector<Point> p_arrpoint) : parse(param_string), arrpoint(p_arrpoint) {
+	Poisk(std::vector<Point> p_arrpoint) : arrpoint(p_arrpoint), p_num(0), p_eps(0), p_Minpts(0) {
 	};
-	void ChangeParse(std::string param_str);
 	void ChangeNum(int c_num);
 	void ChangeEps(double c_eps);
 	void ChangeMinpts(int c_Minpts);
@@ -27,5 +25,5 @@ public:
 	~Poisk() {
 		arrpoint.resize(0);
 	};
-	int Main_Func();
+	void Main_Func();
  };

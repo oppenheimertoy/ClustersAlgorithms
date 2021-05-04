@@ -6,10 +6,6 @@
 #include <iostream>
 using namespace std;
 
-void Poisk::ChangeParse(std::string param_str) {
-	parse = param_str;
-}
-
 void Poisk::ChangeNum(int c_num) {
 	p_num = c_num;
 }
@@ -40,7 +36,7 @@ void Poisk::S_WAVE(double p_eps) {
 	search.PrintToFile_W();
 }
 
-int Poisk::Main_Func() {
+void Poisk::Main_Func() {
 	int action;
 	bool flag = true;
 	cout << "Finish clustering(0)" << endl;
@@ -51,6 +47,7 @@ int Poisk::Main_Func() {
 
 	while (flag) {
 		cout << "Choose an action:" << endl;
+		cin >> action;
 		switch (action) {
 		case 0:
 			flag = false;
@@ -63,7 +60,7 @@ int Poisk::Main_Func() {
 			S_DBSCAN(p_Minpts, p_eps);
 			break;
 		case 2:
-			cout << "Input final number of clusters(int)" << endl;
+			cout << "Input final amount of clusters(int)" << endl;
 			cin >> p_num;
 			S_HIERARCHICAL(p_num);
 			break;
