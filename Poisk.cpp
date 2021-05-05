@@ -55,15 +55,11 @@ void Poisk::OpenGNUplot() {
 		//fprintf(pipe, "set terminal wxt persist\n");
 		fprintf(pipe, "plot(\"field.txt\") with points palette pointsize 2 pointtype 7\n");
 		fflush(pipe);
-		fprintf(pipe, "pause 10\n");
-		//system("pause");
+		fprintf(pipe, "pause 20\n");
 		fprintf(pipe, "exit\n");
-	
 	}
 	else puts("Could not open the file\n");
 	_pclose(pipe);
-	
-
 }
 
 void Poisk::Main_Func() {
@@ -94,11 +90,13 @@ void Poisk::Main_Func() {
 			cout << "Input final amount of clusters(int)" << endl;
 			cin >> p_num;
 			S_HIERARCHICAL(p_num);
+			OpenGNUplot();
 			break;
 		case 3:
 			cout << "Input eps(int)" << endl;
 			cin >> p_eps;
 			S_WAVE(p_eps);
+			OpenGNUplot();
 			break;
 		default:
 			cout << "Sorry, wrong input" << endl;
