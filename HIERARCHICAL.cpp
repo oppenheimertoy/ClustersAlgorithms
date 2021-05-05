@@ -6,7 +6,7 @@
 
 void HIERARCHICAL::PrintToFile_H() {
 	std::ofstream f;
-	f.open("D:\\First need\\Desktop\\C++ projects\\clasterscurs\\hierarchical.txt", std::ios::out);
+	f.open("D:\\First need\\Desktop\\C++ projects\\clasterscurs\\field.txt", std::ios::out);
 	for (int i = 0; i < h_arrpoints.size(); ++i) {
 		f << h_arrpoints[i].Givexcord() << '\t' << h_arrpoints[i].Giveycord() << '\t' << h_arrpoints[i].GiveLable() << std::endl;
 	}

@@ -22,6 +22,8 @@ public:
 	void S_DBSCAN(int Minpts, double eps);
 	void S_HIERARCHICAL(int p_num);
 	void S_WAVE(double p_eps);
+	void CleanLables();
+	void OpenGNUplot();
 	~Poisk() {
 		arrpoint.resize(0);
 	};

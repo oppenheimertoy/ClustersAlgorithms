@@ -64,7 +64,7 @@ std::vector<Point> DBSCAN::Get_DBS() {
 }
 void DBSCAN::PrintToFile_D() {
 	std::ofstream f;
-	f.open("D:\\First need\\Desktop\\C++ projects\\clasterscurs\\dbscan.txt", std::ios::out);
+	f.open("D:\\First need\\Desktop\\C++ projects\\clasterscurs\\field.txt", std::ios::out);
 	for (int i = 0; i < d_arrpoint.size(); ++i) {
 		f << d_arrpoint[i].Givexcord() << '\t' << d_arrpoint[i].Giveycord() << '\t' << d_arrpoint[i].GiveLable() << std::endl;
 	}

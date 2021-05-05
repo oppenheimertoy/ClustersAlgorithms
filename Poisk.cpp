@@ -4,6 +4,10 @@
 #include <algorithm>
 #include <cmath>
 #include <iostream>
+#include <stdio.h>
+#include <stdlib.h>
+#include <cstdio>
+#include <conio.h>
 using namespace std;
 
 void Poisk::ChangeNum(int c_num) {
@@ -36,6 +40,32 @@ void Poisk::S_WAVE(double p_eps) {
 	search.PrintToFile_W();
 }
 
+void Poisk::CleanLables() {
+	for (int i = 0; i < arrpoint.size(); ++i) {
+		arrpoint[i].Setlable(0);
+	}
+}
+
+void Poisk::OpenGNUplot() {
+	string command;
+	FILE* pipe = _popen("C:\\gnuplot\\bin\\gnuplot.exe", "w");
+	if (pipe != NULL)
+	{
+		fprintf(pipe, "cd 'D:\\First need\\Desktop\\C++ projects\\clasterscurs'\n");
+		//fprintf(pipe, "set terminal wxt persist\n");
+		fprintf(pipe, "plot(\"field.txt\") with points palette pointsize 2 pointtype 7\n");
+		fflush(pipe);
+		fprintf(pipe, "pause 10\n");
+		//system("pause");
+		fprintf(pipe, "exit\n");
+	
+	}
+	else puts("Could not open the file\n");
+	_pclose(pipe);
+	
+
+}
+
 void Poisk::Main_Func() {
 	int action;
 	bool flag = true;
@@ -58,6 +88,7 @@ void Poisk::Main_Func() {
 			cout << "Input eps(double): " << endl;
 			cin >> p_eps;
 			S_DBSCAN(p_Minpts, p_eps);
+			OpenGNUplot();
 			break;
 		case 2:
 			cout << "Input final amount of clusters(int)" << endl;
@@ -73,5 +104,6 @@ void Poisk::Main_Func() {
 			cout << "Sorry, wrong input" << endl;
 			break;
 		}
+		CleanLables();
 	}
 }

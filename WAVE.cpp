@@ -85,7 +85,7 @@ void WAVE::Init_WAVE() {
 }
 void WAVE::PrintToFile_W() {
 	std::ofstream f;
-	f.open("D:\\First need\\Desktop\\C++ projects\\clasterscurs\\wave.txt", std::ios::out);
+	f.open("D:\\First need\\Desktop\\C++ projects\\clasterscurs\\field.txt", std::ios::out);
 	for (int i = 0; i < w_ans.size(); ++i) {
 		f << w_ans[i].Givexcord() << '\t' << w_ans[i].Giveycord() << '\t' << w_ans[i].GiveLable() << std::endl;
 	}
