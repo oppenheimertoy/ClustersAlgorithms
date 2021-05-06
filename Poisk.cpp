@@ -47,15 +47,26 @@ void Poisk::CleanLables() {
 }
 
 void Poisk::OpenGNUplot() {
-	string command;
 	FILE* pipe = _popen("C:\\gnuplot\\bin\\gnuplot.exe", "w");
 	if (pipe != NULL)
 	{
 		fprintf(pipe, "cd 'D:\\First need\\Desktop\\C++ projects\\clasterscurs'\n");
-		//fprintf(pipe, "set terminal wxt persist\n");
-		fprintf(pipe, "plot(\"field.txt\") with points palette pointsize 2 pointtype 7\n");
+		fprintf(pipe, "set style line 1 lc rgb 'red'\n");
+		fprintf(pipe, "set style line 2 lc rgb 'blue'\n");
+		fprintf(pipe, "set style line 3 lc rgb 'green'\n");
+		fprintf(pipe, "set style line 4 lc rgb 'magenta'\n");
+		fprintf(pipe, "set style line 5 lc rgb 'yellow'\n");
+		fprintf(pipe, "set style line 6 lc rgb 'cyan'\n");
+		fprintf(pipe, "set style line 7 lc rgb '#80ff80'\n");
+		fprintf(pipe, "set style line 8 lc rgb '#00ffff'\n");
+		fprintf(pipe, "set style line 9 lc rgb '#0080ff'\n");
+		fprintf(pipe, "set style line 10 lc rgb '#0000ff'\n");
+		fprintf(pipe, "set style line 11 lc rgb '#000080'\n");
+		fprintf(pipe, "set style line 12 lc rgb '#bf00bf'\n");
+		fprintf(pipe, "set style data points\n");
+		fprintf(pipe, "plot 'field.txt' using 1:2:3 linecolor variable pt 7 ps 2 t ''\n");
 		fflush(pipe);
-		fprintf(pipe, "pause 20\n");
+		fprintf(pipe, "pause 15\n");
 		fprintf(pipe, "exit\n");
 	}
 	else puts("Could not open the file\n");

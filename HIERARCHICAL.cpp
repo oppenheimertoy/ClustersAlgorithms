@@ -7,6 +7,18 @@
 void HIERARCHICAL::PrintToFile_H() {
 	std::ofstream f;
 	f.open("D:\\First need\\Desktop\\C++ projects\\clasterscurs\\field.txt", std::ios::out);
+	int actlable, counter = 0;
+	actlable = h_arrpoints[0].GiveLable();
+	for (int i = 0; i < h_arrpoints.size(); ++i) {
+		if (h_arrpoints[i].GiveLable() == actlable) {
+			h_arrpoints[i].Setlable(actlable + counter);
+		}
+		else {
+			actlable = h_arrpoints[i].GiveLable();
+			counter++;
+			h_arrpoints[i].Setlable(actlable + counter);
+		}
+	}
 	for (int i = 0; i < h_arrpoints.size(); ++i) {
 		f << h_arrpoints[i].Givexcord() << '\t' << h_arrpoints[i].Giveycord() << '\t' << h_arrpoints[i].GiveLable() << std::endl;
 	}
