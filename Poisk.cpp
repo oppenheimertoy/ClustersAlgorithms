@@ -8,6 +8,7 @@
 #include <stdlib.h>
 #include <cstdio>
 #include <conio.h>
+#include <string>
 using namespace std;
 
 void Poisk::ChangeNum(int c_num) {
@@ -46,7 +47,13 @@ void Poisk::CleanLables() {
 	}
 }
 
-void Poisk::OpenGNUplot() {
+void Poisk::OpenGNUplot(int p_clast) {
+	string amclust = to_string(p_clast);
+	string ampoints = to_string(arrpoint.size());
+	string command_str = "set title \"Amount of clusters = ";
+	string command_str1 = "\" font \"Times New Roman, 10\"\n";
+	string command_str2 = "; Amount of points = ";
+	amclust = command_str + amclust + command_str2 + ampoints + command_str1;
 	FILE* pipe = _popen("C:\\gnuplot\\bin\\gnuplot.exe", "w");
 	if (pipe != NULL)
 	{
@@ -63,6 +70,9 @@ void Poisk::OpenGNUplot() {
 		fprintf(pipe, "set style line 10 lc rgb '#0000ff'\n");
 		fprintf(pipe, "set style line 11 lc rgb '#000080'\n");
 		fprintf(pipe, "set style line 12 lc rgb '#bf00bf'\n");
+		//fprintf(pipe, "set title \"Amount of clusters\" font \"Times New Roman, 20\"\n");
+		fprintf(pipe, "%s\n", amclust.c_str());
+		fprintf(pipe, "%s\n", amclust.c_str());
 		fprintf(pipe, "set style data points\n");
 		fprintf(pipe, "plot 'field.txt' using 1:2:3 linecolor variable pt 7 ps 2 t ''\n");
 		fflush(pipe);
@@ -95,19 +105,19 @@ void Poisk::Main_Func() {
 			cout << "Input eps(double): " << endl;
 			cin >> p_eps;
 			S_DBSCAN(p_Minpts, p_eps);
-			OpenGNUplot();
+			OpenGNUplot(AmountOFClusters());
 			break;
 		case 2:
 			cout << "Input final amount of clusters(int)" << endl;
 			cin >> p_num;
 			S_HIERARCHICAL(p_num);
-			OpenGNUplot();
+			OpenGNUplot(AmountOFClusters());
 			break;
 		case 3:
 			cout << "Input eps(int)" << endl;
 			cin >> p_eps;
 			S_WAVE(p_eps);
-			OpenGNUplot();
+			OpenGNUplot(AmountOFClusters());
 			break;
 		default:
 			cout << "Sorry, wrong input" << endl;
@@ -115,4 +125,16 @@ void Poisk::Main_Func() {
 		}
 		CleanLables();
 	}
+}
+
+int Poisk::AmountOFClusters() {
+	int actlable, counter = 1;
+	actlable = arrpoint[0].GiveLable();
+	for (int i = 0; i <arrpoint.size(); ++i) {
+		if (arrpoint[i].GiveLable() != actlable) {
+			actlable = arrpoint[i].GiveLable();
+			counter++;
+		}
+	}
+	return counter;
 }

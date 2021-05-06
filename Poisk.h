@@ -23,9 +23,10 @@ public:
 	void S_HIERARCHICAL(int p_num);
 	void S_WAVE(double p_eps);
 	void CleanLables();
-	void OpenGNUplot();
+	void OpenGNUplot(int p_clast);
 	~Poisk() {
 		arrpoint.resize(0);
 	};
 	void Main_Func();
+	int AmountOFClusters();
  };
