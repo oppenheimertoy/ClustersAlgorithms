@@ -91,3 +91,7 @@ void HIERARCHICAL::DeleteClusters(int p_lable) {
 		}
 	}
 }
+
+std::vector<Point> HIERARCHICAL::Get_Hierarc() {
+	return h_arrpoints;
+}

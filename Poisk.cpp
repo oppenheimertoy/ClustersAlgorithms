@@ -27,18 +27,21 @@ void Poisk::S_DBSCAN(int Minpts, double eps) {
 	DBSCAN search(arrpoint, Minpts, eps);
 	search.Init_DBSCAN();
 	search.PrintToFile_D();
+	arrpoint = search.Get_DBS();
 }
 
 void Poisk::S_HIERARCHICAL(int p_num) {
 	HIERARCHICAL search(p_num, arrpoint);
 	search.H_Search();
 	search.PrintToFile_H();
+	arrpoint = search.Get_Hierarc();
 }
 
 void Poisk::S_WAVE(double p_eps) {
 	WAVE search(arrpoint, p_eps);
 	search.Init_WAVE();
 	search.PrintToFile_W();
+	arrpoint = search.Get_WAVE();
 }
 
 void Poisk::CleanLables() {
@@ -47,8 +50,8 @@ void Poisk::CleanLables() {
 	}
 }
 
-void Poisk::OpenGNUplot(int p_clast) {
-	string amclust = to_string(p_clast);
+void Poisk::OpenGNUplot() {
+	string amclust = to_string(AmountOFClusters());
 	string ampoints = to_string(arrpoint.size());
 	string command_str = "set title \"Amount of clusters = ";
 	string command_str1 = "\" font \"Times New Roman, 10\"\n";
@@ -105,19 +108,20 @@ void Poisk::Main_Func() {
 			cout << "Input eps(double): " << endl;
 			cin >> p_eps;
 			S_DBSCAN(p_Minpts, p_eps);
-			OpenGNUplot(AmountOFClusters());
+			OpenGNUplot();
+			
 			break;
 		case 2:
 			cout << "Input final amount of clusters(int)" << endl;
 			cin >> p_num;
 			S_HIERARCHICAL(p_num);
-			OpenGNUplot(AmountOFClusters());
+			OpenGNUplot();
 			break;
 		case 3:
 			cout << "Input eps(int)" << endl;
 			cin >> p_eps;
 			S_WAVE(p_eps);
-			OpenGNUplot(AmountOFClusters());
+			OpenGNUplot();
 			break;
 		default:
 			cout << "Sorry, wrong input" << endl;
@@ -128,13 +132,17 @@ void Poisk::Main_Func() {
 }
 
 int Poisk::AmountOFClusters() {
-	int actlable, counter = 1;
-	actlable = arrpoint[0].GiveLable();
-	for (int i = 0; i <arrpoint.size(); ++i) {
-		if (arrpoint[i].GiveLable() != actlable) {
-			actlable = arrpoint[i].GiveLable();
-			counter++;
-		}
+	int counter=0;
+	std::vector<int> ppoints;
+	for (int i = 0; i < arrpoint.size(); ++i) {
+		ppoints.push_back(arrpoint[i].GiveLable());
 	}
+	std::sort(ppoints.begin(), ppoints.end());
+	ppoints.erase(unique(ppoints.begin(), ppoints.end()), ppoints.end());
+	counter = ppoints.size();
 	return counter;
+}
+
+void Poisk::ChangeArrpoint(std::vector<Point> c_arrpoint) {
+	arrpoint = c_arrpoint;
 }

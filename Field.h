@@ -11,7 +11,7 @@ private:
 	int numov;
 
 public:
-	Field(); // дефолтный конструктор 
+	Field(); 
 	Field(int n);
 	~Field();
 	void AddOval(int aparam, double xparam, double yparam, double dxparam, double dyparam);
