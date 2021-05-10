@@ -6,7 +6,7 @@
 
 
 Field::Field():numov(0){
-	
+	vecall.resize(0);
 }
 
 Field::Field(int n) {

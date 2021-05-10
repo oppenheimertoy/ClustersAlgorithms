@@ -8,12 +8,21 @@
 #include "Poisk.h"
 #include<iostream>
 #include <fstream>
+#include <string>
+
+using namespace std;
 
 class Interface {
 private:
 	Field pole;
 	Poisk search;
+	string parse;
 public:
-	Interface()
+	Interface(): parse("Init") {
+	};
+	~Interface() {};
+	void Change_Parse(string p_parse);
+	void Main_Func();
+	void Print_Help();
 };
 

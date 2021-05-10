@@ -26,4 +26,5 @@ public:
 	void H_Search();
 	int AmountOfClusters();
 	void DeleteClusters(int p_lable);
+	std::vector<Point> Get_Hierarc();
 };
