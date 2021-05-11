@@ -23,6 +23,5 @@ public:
 	~Interface() {};
 	void Change_Parse(string p_parse);
 	void Main_Func();
-	void Print_Help();
 };
 

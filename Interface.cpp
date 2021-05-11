@@ -16,20 +16,31 @@ void Interface::Change_Parse(string p_parse) {
 }
 
 void Interface::Main_Func() {
-	cout << ".................................................." << endl;
-	cout << "Please enter \"Help\" to get help or enter command" << endl;
-	while (parse != "Finish work"){
-		getline(cin, parse);// здесь должна быть проверка ввода
-		if (parse == "Help") {
-			Print_Help();
-		}
-		else if (parse == "New Field") {
+	cout << ".............................................." << endl;
+	cout << "   ........................................   " << endl;
+	cout << "      ..................................      " << endl;
+	cout << "Select command" << endl;
+	bool flag = true;
+	int command;
+	while (flag){
+		cout << "1) New Field - create new field(not from file) press(0)" << endl;
+		cout << "2) Load Field - create new field(from file) press(1)" << endl;
+		cout << "3) Add Cloud - add new cloud press(3) " << endl;
+		cout << "4)Search - start clustering press(4)" << endl;
+		cout << "5)Finish work - press(5)" << endl;
+		cout << "Command: ";
+		cin >> command;
+		string filename = "D:\\First need\\Desktop\\C++ projects\\clasterscurs\\";
+		string ans_F;
+		switch (command) {
+		case 0:
+			pole.Clean();
 			cout << "Input amount of clouds" << endl;
-			string ans = "Finish work";
 			int amount;
-			cin >> amount; // проверка
+			cin >> amount; 
 			for (int i = 0; i < amount; ++i) {
 				int n_points;
+				string ans;
 				double xcent, ycent, despx, despy;
 				cout << "................................" << endl;
 				cout << "Input number of points in cloud" << endl;
@@ -38,113 +49,96 @@ void Interface::Main_Func() {
 				cin >> xcent >> ycent; //+
 				cout << "Input dispersion (disx dis y)" << endl;
 				cin >> despx >> despy; //+
-				pole.AddOval(n_points, xcent, ycent, despx, despy);
+				Oval cloud(n_points, xcent, ycent, despx, despy);
 				cout << "Do you wan to rotate or move this cloud(y/n)" << endl;
-				bool flag = true;
-				while (flag) {
-					getline(cin, ans);
-					if (ans == "Y" || ans=="y") {
+				bool flag1 = true;
+				cout << "Command: ";
+				cin >> ans;
+				while (flag1) {
+					if (ans == "Y" || ans == "y") {
+						vector<Point> points_rot;
 						cout << "..................................." << endl;
 						cout << "Cloud rotation and moving menu" << endl;
-						cout << "Please input command(Rotate Cloud Dec and etc.)" << endl;
-						Rotation_and_Move(n_points, xcent, ycent, despx, despy);
-						flag=false;
-						parse = "Finish rm";
+						cout << "1) Rotate Cloud Dec - rotate oval around origin press(1)" << endl;
+						cout << "2) Rotate Cloud Center - rotate cloud around it's own center press(2)" << endl;
+						cout << "3) Move Cloud X - move cloud by x-cord press(3)" << endl;
+						cout << "4) Rotate Cloud Dec - rotate oval around origin press(4)" << endl;
+						cout << "5) Close menu - press(0)" << endl;
+						int command1;
+						double degree, offset;
+						cout << "Command: ";
+						cin >> command1;
+						switch (command1) {
+						case 0:
+							flag1 = false;
+							break;
+						case 1:
+							cout << "Input degree of rotation around origin" << endl;
+							cin >> degree;
+							cloud.Rotatedecartcenter(degree);
+							pole.AddOval(cloud);
+							break;
+						case 2:
+							cout << "Input degree of rotation around center" << endl;
+							cin >> degree; 
+							cloud.Rotatecenter(degree);
+							pole.AddOval(cloud);
+							break;
+						case 3:
+							cout << "Input axis X offset" << endl;
+							cin >> offset;
+							cloud.MoveX(offset);
+							pole.AddOval(cloud);
+							break;
+						case 4:
+							cout << "Input axis Y offset" << endl;
+							cin >> offset; 
+							cloud.MoveY(offset);
+							pole.AddOval(cloud);
+							break;
 
+						default:
+							cout << "Wrong Command" << endl;
+							break;
+						}
+						
+					
 					}
 					else if (ans == "N" || ans == "n") {
-						flag = false;
-						parse = "Finish rm";
+						pole.AddOval(cloud);
+						flag1 = false;
 					}
 					else {
 						cout << "Wrong Command!" << endl;
+						pole.AddOval(cloud);
+						flag1 = false;
 					}
 				}
 
 			}
-		}
-		else if (parse == "Load Field") {
-			string filename;
-			cout << "Input filename";
-			getline(cin, parse);
+			break;
+		case 1:
+			cout << "Input filename in project's directory(*.txt)" << endl;
+			cin >> ans_F;
+			filename = filename + ans_F;
+			cout << filename;
 			pole.FillFromFile(filename);
-		}
-		else if (parse == "Search") {
-			if (!pole.Get_Points().empty() != 0) {
+			break;
+
+		case 4:
+			if (!pole.Get_Points().empty()) {
 				search.ChangeArrpoint(pole.Get_Points());
 				search.Main_Func();
-				parse == "Finish Search";
 			}
-		}
-		else if (parse == "Finish rm") {
-			cout << "You finished configured clouds" << endl;
-		}
-		else if (parse == "Finish work"){
-			cout << "Goodbye" << endl;
-		}
-		else {
-			cout << "Wrong Command!" << endl;
-		}
-	}
-}
-
-void Interface::Print_Help() {
-	std::ifstream f;
-	string line;
-	f.open("D:\\First need\\Desktop\\C++ projects\\clasterscurs\\help.txt", std::ios::out);
-	while (getline(f,line)) {
-		cout<<line<<endl;
-	}
-	f.close();
-}
-
-void Interface::Rotation_and_Move(int aparam, double xparam, double yparam, double dxparam, double dyparam) {
-	string command;
-	vector<Point> points_rot;
-	while (command != "Finish rm") {
-		getline(cin, command);// здесь должна быть проверка ввода
-		if (command == "Help") {
-			Print_Help();
-		}
-		else if (command == "Rotate Cloud Dec") {
-			cout << "Input degree of rotation around origin" << endl;
-			string ans;
-			double degree;
-			cin >> degree; // проверка
-			Oval cloud(aparam, xparam, yparam, dxparam, dyparam);
-			cloud.Rotatedecartcenter(degree);
-			points_rot = cloud.Get_Oval();
-		}
-		else if (command == "Rotate Cloud Center") {
-			cout << "Input degree of rotation around center" << endl;
-			string ans;
-			double degree;
-			cin >> degree; // проверка
-			Oval cloud(aparam, xparam, yparam, dxparam, dyparam);
-			cloud.Rotatecenter(degree);
-			points_rot = cloud.Get_Oval();
-		}
-		else if (command == "Move Cloud X") {
-			cout << "Input axis X offset" << endl;
-			string ans;
-			double offset;
-			cin >> offset; // проверка
-			Oval cloud(aparam, xparam, yparam, dxparam, dyparam);
-			cloud.MoveX(offset);
-			points_rot = cloud.Get_Oval();
-		}
-		else if (command == "Move Cloud Y") {
-			cout << "Input axis Y offset" << endl;
-			string ans;
-			double offset;
-			cin >> offset; // проверка
-			Oval cloud(aparam, xparam, yparam, dxparam, dyparam);
-			cloud.MoveY(offset);
-			points_rot = cloud.Get_Oval();
-		}
-		else {
-			cout << "Wrong Command!" << endl;
+			break;
+		case 5:
+			flag=false;
+			cout << "      ..................................      " << endl;
+			cout << "   ........................................   " << endl;
+			cout << ".............................................." << endl;
+			break;
+		default:
+			cout << "Wrong Command" << endl;
 		}
 	}
-	pole.Changeend(points_rot, aparam);
 }
