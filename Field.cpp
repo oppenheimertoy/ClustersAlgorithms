@@ -40,17 +40,30 @@ void Field::PrintToFile() {
 	f.close();
 }
 
-void Field::FillFromFile(const char *filename) {
-	double x, y; 
+void Field::FillFromFile(std::string filename) {
+	double x, y;
 	int lable;
 	std::ifstream f;
 	f.open(filename, std::ios::in);
+	if (f.is_open()){
+		std::cout << " File exist" << std::endl;
 	while (!f.eof()) {
-			f >> x >> y >> lable;
-			vecall.push_back(Point(x, y, lable));
-		}
+		f >> x >> y >> lable;
+		vecall.push_back(Point(x, y, lable));
+	}
+	}
+	else
+	{
+		std::cout << " File does not exist!" << std::endl;
+	}
 }
 
 std::vector<Point> Field::Get_Points() {
 	return vecall;
 }
+
+void Field::Clean() {
+	vecall.resize(0);
+}
+
+

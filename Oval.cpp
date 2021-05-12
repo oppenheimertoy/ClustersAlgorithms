@@ -117,3 +117,6 @@ void Oval::AddtoPointlist(std::vector<Point>& pvec) {
     }
 }
 
+std::vector<Point> Oval::Get_Oval() {
+    return vecp;
+}

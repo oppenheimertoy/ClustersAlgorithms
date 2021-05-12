@@ -7,6 +7,7 @@
 #include "DBSCAN.h"
 #include "HIERARCHICAL.h"
 #include "WAVE.h"
+using namespace std;
 class Poisk {
 private:
 	std::vector<Point> arrpoint; //for all 
@@ -33,4 +34,6 @@ public:
 	};
 	void Main_Func();
 	int AmountOFClusters();
+	bool try_stod(double& i, const string& s);
+	bool try_stoi(int& i, const string& s);
  };

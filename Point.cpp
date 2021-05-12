@@ -63,3 +63,9 @@ int Point::GiveLable() { // вернуть метку кластера
 	return (fclast);
 }
 
+void Point::SetPoint(Point& ppoint) {
+	x = ppoint.x;
+	y = ppoint.y;
+	fclast = ppoint.fclast;
+}
+

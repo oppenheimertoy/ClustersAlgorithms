@@ -38,7 +38,7 @@ void Poisk::S_HIERARCHICAL(int p_num) {
 }
 
 void Poisk::S_WAVE(double p_eps) {
-	WAVE search(arrpoint, p_eps);
+	WAVET search(arrpoint, p_eps);
 	search.Init_WAVE();
 	search.PrintToFile_W();
 	arrpoint = search.Get_WAVE();
@@ -89,6 +89,7 @@ void Poisk::OpenGNUplot() {
 void Poisk::Main_Func() {
 	int action;
 	bool flag = true;
+	string ans;
 	cout << "Finish clustering(0)" << endl;
 	cout << "Start DBSCAN search(1)" << endl;
 	cout << "Start Hierarchical search(2)" << endl;
@@ -97,29 +98,61 @@ void Poisk::Main_Func() {
 
 	while (flag) {
 		cout << "Choose an action:" << endl;
-		cin >> action;
+		cin >> ans;
+		while (!try_stoi(action, ans)) {
+			cout << "Wrong Command!" << endl;
+			cin >> ans;
+		}
 		switch (action) {
 		case 0:
 			flag = false;
 			break;
 		case 1:
 			cout << "Input Minpts(int): " << endl;
-			cin >> p_Minpts;
+			cin >> ans;
+			while (!try_stoi(p_Minpts, ans)) {
+				cout << "Wrong Command!" << endl;
+				cin >> ans;
+			}
+			if (p_Minpts < 0) {
+				p_Minpts *= (-1);
+			}
 			cout << "Input eps(double): " << endl;
-			cin >> p_eps;
+			cin >> ans;
+			while (!try_stod(p_eps, ans)) {
+				cout << "Wrong Command!" << endl;
+				cin >> ans;
+			}
+			if (p_eps < 0) {
+				p_eps = p_eps*(-1);
+			}
 			S_DBSCAN(p_Minpts, p_eps);
 			OpenGNUplot();
-			
+
 			break;
 		case 2:
 			cout << "Input final amount of clusters(int)" << endl;
-			cin >> p_num;
+			cin >> ans;
+			while (!try_stoi(p_num, ans)) {
+				cout << "Wrong Command!" << endl;
+				cin >> ans;
+			}
+			if (p_num < 0) {
+				p_num *= (-1);
+			}
 			S_HIERARCHICAL(p_num);
 			OpenGNUplot();
 			break;
 		case 3:
 			cout << "Input eps(int)" << endl;
-			cin >> p_eps;
+			cin >> ans;
+			while (!try_stod(p_eps, ans)) {
+				cout << "Wrong Command!" << endl;
+				cin >> ans;
+			}
+			if (p_eps < 0) {
+				p_eps = p_eps * (-1);
+			}
 			S_WAVE(p_eps);
 			OpenGNUplot();
 			break;
@@ -132,7 +165,7 @@ void Poisk::Main_Func() {
 }
 
 int Poisk::AmountOFClusters() {
-	int counter=0;
+	int counter = 0;
 	std::vector<int> ppoints;
 	for (int i = 0; i < arrpoint.size(); ++i) {
 		ppoints.push_back(arrpoint[i].GiveLable());
@@ -145,4 +178,26 @@ int Poisk::AmountOFClusters() {
 
 void Poisk::ChangeArrpoint(std::vector<Point> c_arrpoint) {
 	arrpoint = c_arrpoint;
+}
+
+bool Poisk::try_stod(double& i, const string& s) {
+	try {
+		size_t pos;
+		i = stod(s, &pos);
+		return pos == s.size();
+	}
+	catch (const std::invalid_argument&) {
+		return false;
+	}
+}
+
+bool Poisk::try_stoi(int& i, const string& s) {
+	try {
+		size_t pos;
+		i = stoi(s, &pos);
+		return pos == s.size();
+	}
+	catch (const std::invalid_argument&) {
+		return false;
+	}
 }

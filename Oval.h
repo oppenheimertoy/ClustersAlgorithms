@@ -18,6 +18,7 @@ public:
 	void operator = (const Oval& poval);
 	void AddtoPointlist(std::vector<Point>& pvec);
 	void Show(); // вывод облака в консоль
+	std::vector<Point>Get_Oval();
 	
 
 	// ..........................операции преобразования облака точек

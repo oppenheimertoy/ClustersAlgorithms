@@ -23,5 +23,8 @@ public:
 	~Interface() {};
 	void Change_Parse(string p_parse);
 	void Main_Func();
+	void AddCluster();
+	bool try_stoi(int& i, const string& s);
+	bool try_stod(double& i, const string& s);
 };
 

@@ -20,5 +20,6 @@ public:
 	void Accure(double pog1, double pog2); // методы отвечающие за сдивг точки
 	void Accurex(double pog1);
 	void Accurey(double pog2);
+	void SetPoint(Point& ppoint);
 	//void operator = (const Point& ppoint); // переопределенный оператор
 };
