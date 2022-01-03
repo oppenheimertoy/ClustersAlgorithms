@@ -73,7 +73,6 @@ void Poisk::OpenGNUplot() {
 		fprintf(pipe, "set style line 10 lc rgb '#0000ff'\n");
 		fprintf(pipe, "set style line 11 lc rgb '#000080'\n");
 		fprintf(pipe, "set style line 12 lc rgb '#bf00bf'\n");
-		//fprintf(pipe, "set title \"Amount of clusters\" font \"Times New Roman, 20\"\n");
 		fprintf(pipe, "%s\n", amclust.c_str());
 		fprintf(pipe, "%s\n", amclust.c_str());
 		fprintf(pipe, "set style data points\n");
